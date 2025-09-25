@@ -1,7 +1,263 @@
 <!DOCTYPE html>
 <html>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Zenkio | Personal Webpage</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Roboto', Arial, sans-serif;
+			margin: 0;
+			background: #f4f6f8;
+			color: #222;
+		}
+		header {
+			background: #222;
+			color: #fff;
+			padding: 2rem 0 1rem 0;
+			text-align: center;
+		}
+		.profile-img {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 4px solid #fff;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			margin-bottom: 1rem;
+		}
+		.container {
+			max-width: 800px;
+			margin: 2rem auto;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+			padding: 2rem;
+		}
+		h1, h2 {
+			margin-top: 0;
+		}
+		.section {
+			margin-bottom: 2rem;
+		}
+		.skills-list, .projects-list {
+			list-style: none;
+			padding: 0;
+		}
+		.skills-list li, .projects-list li {
+			background: #f0f2f5;
+			margin-bottom: 0.5rem;
+			padding: 0.5rem 1rem;
+			border-radius: 4px;
+		}
+		.contact {
+			text-align: center;
+		}
+		.contact a {
+			color: #0077cc;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		@media (max-width: 600px) {
+			.container {
+				padding: 1rem;
+			}
+		}
+	</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+	<section class="hero">
+		<img src="https://avatars.githubusercontent.com/u/your-github-id?v=4" alt="Profile" class="profile-img">
+		<h1 class="hero-title">Zenkio</h1>
+		<h2 class="hero-subtitle">Full Stack Developer</h2>
+		<p class="hero-tagline">Building impactful software and beautiful web experiences.</p>
+	</section>
+	<style>
+		.hero {
+			background: linear-gradient(90deg, #222 60%, #0077cc 100%);
+			color: #fff;
+			text-align: center;
+			padding: 3rem 1rem 2rem 1rem;
+			border-radius: 0 0 16px 16px;
+			box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+		}
+		.hero-title {
+			font-size: 2.8rem;
+			font-weight: 700;
+			margin: 0.5rem 0 0.2rem 0;
+		}
+		.hero-subtitle {
+			font-size: 1.5rem;
+			font-weight: 400;
+			margin: 0 0 1rem 0;
+		}
+		.hero-tagline {
+			font-size: 1.1rem;
+			font-weight: 300;
+			margin-bottom: 0;
+		}
+	</style>
+	<div class="container">
+		<section class="section">
+			<h2>About Me</h2>
+			<p>
+				Hello! I'm Zenkio, a full stack developer with a passion for creating elegant, user-focused web applications. With experience in both frontend and backend technologies, I thrive on solving complex problems and delivering high-quality solutions. My journey in tech began with curiosity and has grown into a career dedicated to continuous learning, open source contribution, and building products that make a difference.
+			</p>
+			<p>
+				I specialize in JavaScript/Typescript, React, Node.js, and Python, and enjoy collaborating with teams to turn ideas into reality. Whether it's a startup MVP or a polished enterprise platform, I bring creativity, technical expertise, and a commitment to excellence.
+			</p>
+		</section>
+		<section class="section">
+			<h2>Skills</h2>
+			<ul class="skills-list">
+				<li>JavaScript / TypeScript</li>
+				<li>Python</li>
+				<li>React / Next.js</li>
+				<li>Node.js</li>
+				<li>HTML / CSS</li>
+			</ul>
+		</section>
+		<!-- <section class="section">
+			<h2>Projects</h2>
+			<div class="project-gallery">
+				<div class="project-card">
+					<img src="https://via.placeholder.com/320x180?text=Portfolio+Website" alt="Portfolio Website" class="project-img">
+					<h3>Personal Portfolio Website</h3>
+					<p>A modern, responsive site to showcase my skills, experience, and projects. Built with React and deployed on GitHub Pages.</p>
+				</div>
+				<div class="project-card">
+					<img src="https://via.placeholder.com/320x180?text=Open+Source" alt="Open Source Contributions" class="project-img">
+					<h3>Open Source Contributions</h3>
+					<p>Active contributor to various open source projects. Check out my work on <a href="https://github.com/zenkio" target="_blank">GitHub</a>.</p>
+				</div>
+				<div class="project-card">
+					<img src="https://via.placeholder.com/320x180?text=Sample+App" alt="Sample App" class="project-img">
+					<h3>Sample App</h3>
+					<p>Demo application built to explore new frameworks and best practices in web development.</p>
+				</div>
+			</div>
+	<style>
+		.project-gallery {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 2rem;
+			justify-content: center;
+		}
+		.project-card {
+			background: #f0f2f5;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+			padding: 1rem;
+			max-width: 320px;
+			flex: 1 1 320px;
+			text-align: left;
+		}
+		.project-img {
+			width: 100%;
+			border-radius: 6px;
+			margin-bottom: 0.75rem;
+		}
+		.project-card h3 {
+			margin: 0.5rem 0 0.3rem 0;
+		}
+		.project-card p {
+			margin: 0;
+		}
+		@media (max-width: 900px) {
+			.project-gallery {
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	</style>
+		</section> -->
+		<section class="section">
+			<h2>Resume</h2>
+			<a href="resume.pdf" class="resume-btn" download>Download My Resume (PDF)</a>
+		</section>
+		<section class="section contact">
+			<h2>Contact</h2>
+			<form class="contact-form" action="mailto:your.email@example.com" method="POST" enctype="text/plain">
+				<input type="text" name="name" placeholder="Your Name" required>
+				<input type="email" name="email" placeholder="Your Email" required>
+				<textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+				<button type="submit">Send Message</button>
+			</form>
+			<div class="social-links">
+				<a href="https://github.com/zenkio" target="_blank" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" class="social-icon"></a>
+				<a href="https://www.linkedin.com/in/man-ho-fung-064850176/" target="_blank" title="LinkedIn"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" class="social-icon"></a>
+				<a href="mailto:zenkio.it@gmail.com" title="Email"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email" class="social-icon"></a>
+			</div>
+	<style>
+		.contact-form {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+			max-width: 400px;
+			margin: 1rem auto 2rem auto;
+		}
+		.contact-form input,
+		.contact-form textarea {
+			padding: 0.5rem;
+			border-radius: 4px;
+			border: 1px solid #ccc;
+			font-size: 1rem;
+		}
+		.contact-form button {
+			background: #0077cc;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			padding: 0.75rem;
+			font-size: 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		.contact-form button:hover {
+			background: #005fa3;
+		}
+		.social-links {
+			margin-top: 1rem;
+			display: flex;
+			justify-content: center;
+			gap: 1.5rem;
+		}
+		.social-icon {
+			width: 32px;
+			height: 32px;
+			transition: transform 0.2s;
+		}
+		.social-icon:hover {
+			transform: scale(1.15);
+		}
+	</style>
+		</section>
+	<style>
+		.resume-btn {
+			display: inline-block;
+			background: #0077cc;
+			color: #fff;
+			padding: 0.75rem 1.5rem;
+			border-radius: 6px;
+			font-size: 1rem;
+			font-weight: 600;
+			text-decoration: none;
+			margin-top: 0.5rem;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+			transition: background 0.2s;
+		}
+		.resume-btn:hover {
+			background: #005fa3;
+		}
+	</style>
+	</div>
+</body>
+</html>
 </body>
 </html>
