@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { GitHub, LinkedIn } from './component/icon';
 import { useTheme, ThemeProvider } from "./component/theme";
+import { useEffect, useRef, useState } from "react";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -215,6 +216,80 @@ const PlaceholderImage = () => (
   </div>
 );
 
+// Theme gradient options and component moved to top-level scope
+const themeGradients = [
+  // Light blue/purple/cyan
+  "from-indigo-400/30 via-fuchsia-400/20 to-cyan-300/30 dark:from-indigo-600/30 dark:via-fuchsia-600/20 dark:to-cyan-500/30",
+  // Orange/pink/yellow
+  "from-orange-300/30 via-pink-300/20 to-yellow-200/30 dark:from-orange-500/30 dark:via-pink-500/20 dark:to-yellow-400/30",
+  // Green/teal/blue
+  "from-green-300/30 via-teal-300/20 to-blue-300/30 dark:from-green-500/30 dark:via-teal-500/20 dark:to-blue-500/30",
+];
+
+function getRandomGradient() {
+  // You can use a random or deterministic approach
+  return themeGradients[2]; // Or Math.floor(Math.random() * themeGradients.length)
+}
+
+const typeEffects = [
+  "Building performant, reliable interfaces.",
+  "Specialized in React, TypeScript, and AWS.",
+  "Delivering scalable web apps with a product mindset.",
+];
+
+function useTypeEffect(texts: string[], typingSpeed = 60, pause = 1200) {
+  const [display, setDisplay] = useState("");
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    if (!deleting && subIndex < texts[index].length) {
+      timeoutRef.current = setTimeout(() => {
+        setSubIndex((v) => v + 1);
+        setDisplay(texts[index].slice(0, subIndex + 1));
+      }, typingSpeed);
+    } else if (!deleting && subIndex === texts[index].length) {
+      timeoutRef.current = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && subIndex > 0) {
+      timeoutRef.current = setTimeout(() => {
+        setSubIndex((v) => v - 1);
+        setDisplay(texts[index].slice(0, subIndex - 1));
+      }, typingSpeed / 2);
+    } else if (deleting && subIndex === 0) {
+      setDeleting(false);
+      setIndex((v) => (v + 1) % texts.length);
+    }
+
+    return () => clearTimeout(timeoutRef.current);
+  }, [texts, index, subIndex, deleting, typingSpeed, pause]);
+
+  return display;
+}
+
+const TypeEffect = () => {
+  const text = useTypeEffect(typeEffects);
+  return (
+    <span>
+      {text}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+};
+
+const ThemeGradientBlob = () => {
+  const gradient = getRandomGradient();
+  return (
+    <div
+      className={`absolute -right-8 -top-8 h-40 w-60 rounded-full bg-gradient-to-tr blur-2xl ${gradient}`}
+      aria-hidden
+    />
+  );
+};
+
 function AppContent() {
   return (
     <main className="min-h-screen scroll-smooth bg-zinc-50 text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-100">
@@ -256,7 +331,7 @@ function AppContent() {
                   <MapPin className="h-3.5 w-3.5" /> {profile.location}
                 </p>
                 <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                  Building performant, reliable interfaces.
+                      <TypeEffect />
                 </h1>
                 <p className="mt-5 max-w-xl text-lg text-zinc-600 dark:text-zinc-300">
                   {profile.summary}
@@ -293,7 +368,8 @@ function AppContent() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <Card className="relative overflow-hidden">
-                <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-gradient-to-tr from-indigo-400/30 via-fuchsia-400/20 to-cyan-300/30 blur-2xl dark:from-indigo-600/30 dark:via-fuchsia-600/20 dark:to-cyan-500/30" />
+                {/* Theme gradient blob */}
+                <ThemeGradientBlob />
                 <div className="relative">
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-zinc-600 dark:text-zinc-300">
                     <Rocket className="h-3.5 w-3.5" /> Available for freelance
