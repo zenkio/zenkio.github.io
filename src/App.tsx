@@ -2,8 +2,6 @@
 import React, { useEffect, useState, PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import {
-  Github,
-  Linkedin,
   Mail,
   Download,
   Moon,
@@ -298,14 +296,22 @@ export default function App() {
                     aria-label="GitHub"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
                   >
-                    <img src={siGithub.svg} alt="GitHub" className="h-5 w-5" />
+                    <img src={siGithub.source} alt="GitHub" className="h-5 w-5" />
                   </a>
                   <a
                     href={profile.social.linkedin}
                     aria-label="LinkedIn"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
                   >
-                    <Linkedin className="h-5 w-5" />
+                    <img
+                      src={
+                        document.documentElement.classList.contains("dark")
+                          ? "/in-logo/InBug-Black.png"
+                          : "/in-logo/InBug-Black.png"
+                      }
+                      alt="LinkedIn"
+                      className="h-5 w-5"
+                    />
                   </a>
                   {/* Email button that only shows if a mail client is available */}
                   {typeof window !== "undefined" && "navigator" in window && "canShare" in navigator ? null : (
