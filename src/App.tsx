@@ -115,15 +115,15 @@ const profile = {
 const stats = [
   { label: "Years Experience on IT", value: "7+" },
   { label: "Years Experience on Electonics", value: "8+" },
-  { label: "Tech Stack", value: "React / Node / JAVA / AWS" },
+  { label: "Tech Stack", value: "React / Java / AWS" },
 ];
 
 const skills = [
   "React",
   "TypeScript",
   "Next.js",
+  "Remix.js",
   "Node.js",
-  "GraphQL",
   "PostgreSQL",
   "AWS",
   "Docker",
@@ -133,64 +133,82 @@ const skills = [
   "Tailwind CSS",
 ];
 
-const projects = [
-  {
-    title: "Realtime Analytics Dashboard",
-    description:
-      "High-throughput data viz platform ingesting millions of events/day with sub-second charts.",
-    stack: ["Next.js", "WebSockets", "ClickHouse"],
-    link: "#",
-  },
-  {
-    title: "Headless Commerce Kit",
-    description:
-      "Composable storefront framework with server components and edge caching.",
-    stack: ["React Server Components", "Vercel Edge", "Stripe"],
-    link: "#",
-  },
-  {
-    title: "ML-Powered Code Review Bot",
-    description:
-      "Static analysis + LLM suggestions integrated into GitHub PR workflows.",
-    stack: ["Node.js", "OpenAI", "GitHub Apps"],
-    link: "#",
-  },
+
+
+type Project = {
+  title: string;
+  description: string;
+  stack: string[];
+  link: string;
+};
+
+const projects: Project[] = [
+  // {
+  //   title: "Realtime Analytics Dashboard",
+  //   description:
+  //     "High-throughput data viz platform ingesting millions of events/day with sub-second charts.",
+  //   stack: ["Next.js", "WebSockets", "ClickHouse"],
+  //   link: "#",
+  // },
+  // {
+  //   title: "Headless Commerce Kit",
+  //   description:
+  //     "Composable storefront framework with server components and edge caching.",
+  //   stack: ["React Server Components", "Vercel Edge", "Stripe"],
+  //   link: "#",
+  // },
+  // {
+  //   title: "ML-Powered Code Review Bot",
+  //   description:
+  //     "Static analysis + LLM suggestions integrated into GitHub PR workflows.",
+  //   stack: ["Node.js", "OpenAI", "GitHub Apps"],
+  //   link: "#",
+  // },
 ];
 
 const experience = [
   {
-    role: "Senior Frontend Engineer",
-    company: "Nimbus Labs",
-    period: "2022 — Present",
+    role: "Senior Software Engineer",
+    company: "Safeguard Global",
+    period: "2021 — Present",
     bullets: [
-      "Led migration to TypeScript across 20+ packages, reducing runtime bugs by 35%.",
-      "Built design system used by 5 product teams; increased delivery speed 2x.",
-    ],
-  },
-  {
-    role: "Full‑stack Engineer",
-    company: "OrbitHQ",
-    period: "2019 — 2022",
-    bullets: [
-      "Scaled monolith → micro frontends; cut build times from 26m to 7m.",
-      "Designed event-driven architecture for billing and notifications.",
+      "Developed a modern, responsive payroll application to streamline global payroll operations and enhance user experience.",
+      "Redesigned database schemas to optimize query performance and support scalable, generalized data models.",
+      "Engineered a robust data ingestion pipeline for validating, transforming, and summarizing incoming data prior to database integration.",
+      "Architected and implemented event-driven systems to facilitate seamless communication between backend services.",
     ],
   },
   {
     role: "Software Engineer",
-    company: "Freelance",
-    period: "2016 — 2019",
+    company: "Welab Bank",
+    period: "2020 — 2021",
     bullets: [
-      "Delivered 15+ apps for SMEs, from MVP to production.",
-      "Set up infra as code pipelines on AWS for clients.",
+      "Collaborated with the frontend team to deliver new features for a digital banking application, improving customer engagement.",
+      "Led a small team to modernize legacy Java services, enhancing the reliability and maintainability of payment backend systems.",
+      "Resolved production issues and implemented improvements to increase overall system stability and uptime.",
+    ],
+  },
+  {
+    role: "Analyst Programmer II",
+    company: "Cityline (Hong Kong) Limited",
+    period: "2018 — 2020",
+    bullets: [
+      "Designed and implemented coupon logic for the Jockey Club project, increasing promotional flexibility.",
+      "Developed and maintained ticketing management features for the Ocean Park project, supporting high-volume transactions.",
     ],
   },
 ];
 
-const writing = [
-  { title: "Optimizing React for Perceived Performance", date: "Aug 2025", link: "#" },
-  { title: "Edge Rendering with RSC: A Practical Guide", date: "Jun 2025", link: "#" },
-  { title: "Testing Beyond the UI: Contract Tests", date: "Mar 2025", link: "#" },
+type Writing = {
+  title: string;
+  date: string;
+  link: string;
+};
+
+const writing: Writing[] = [
+  // { title: "Optimizing React for Perceived Performance", date: "Aug 2025", link: "#" },
+  // { title: "Edge Rendering with RSC: A Practical Guide", date: "Jun 2025", link: "#" },
+  // { title: "Testing Beyond the UI: Contract Tests", date: "Mar 2025", link: "#" },
 ];
 
 const FadeIn = ({ delay = 0, children, y = 12 }: { delay?: number; children: React.ReactNode; y?: number }) => (
@@ -319,38 +337,39 @@ export default function App() {
           </div>
         </Container>
       </section>
-
-      <section id="projects" className="py-14 sm:py-20">
-        <Container>
-          <SectionTitle eyebrow="Selected Work" title="Projects" subtitle="A few things I've shipped recently." />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((p, idx) => (
-              <FadeIn key={idx} delay={idx * 0.05}>
-                <Card className="flex h-full flex-col">
-                  <PlaceholderImage />
-                  <div className="mt-4 flex flex-1 flex-col">
-                    <h3 className="text-lg font-semibold">{p.title}</h3>
-                    <p className="mt-1 flex-1 text-sm text-zinc-600 dark:text-zinc-300">{p.description}</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {p.stack.map((s, i) => (
-                        <Badge key={i}>{s}</Badge>
-                      ))}
+      {projects.length > 0 && (
+        <section id="projects" className="py-14 sm:py-20">
+          <Container>
+            <SectionTitle eyebrow="Selected Work" title="Projects" subtitle="A few things I've shipped recently." />
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {projects.map((p, idx) => (
+                <FadeIn key={idx} delay={idx * 0.05}>
+                  <Card className="flex h-full flex-col">
+                    <PlaceholderImage />
+                    <div className="mt-4 flex flex-1 flex-col">
+                      <h3 className="text-lg font-semibold">{p.title}</h3>
+                      <p className="mt-1 flex-1 text-sm text-zinc-600 dark:text-zinc-300">{p.description}</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {p.stack.map((s, i) => (
+                          <Badge key={i}>{s}</Badge>
+                        ))}
+                      </div>
+                      <div className="mt-4">
+                        <a
+                          href={p.link}
+                          className="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+                        >
+                          View project <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </div>
                     </div>
-                    <div className="mt-4">
-                      <a
-                        href={p.link}
-                        className="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
-                      >
-                        View project <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </div>
-                </Card>
-              </FadeIn>
-            ))}
-          </div>
-        </Container>
-      </section>
+                  </Card>
+                </FadeIn>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <section id="skills" className="border-y py-14 dark:border-zinc-800 sm:py-20">
         <Container>
@@ -398,27 +417,28 @@ export default function App() {
           </div>
         </Container>
       </section>
-
-      <section id="writing" className="border-y py-14 dark:border-zinc-800 sm:py-20">
-        <Container>
-          <SectionTitle eyebrow="Notes" title="Writing" subtitle="Occasional deep dives on frontend, DX, and systems." />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {writing.map((w, idx) => (
-              <Card key={idx}>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <a href={w.link} className="text-lg font-semibold underline-offset-4 hover:underline">
-                      {w.title}
-                    </a>
-                    <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{w.date}</p>
-                  </div>
-                  <BookOpen className="h-5 w-5 text-zinc-400" />
-                </div>
-              </Card>
-            ))}
+      {writing.length > 0 && (
+        <section id="writing" className="border-y py-14 dark:border-zinc-800 sm:py-20">
+          <Container>
+        <SectionTitle eyebrow="Notes" title="Writing" subtitle="Occasional deep dives on frontend, DX, and systems." />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {writing.map((w, idx) => (
+            <Card key={idx}>
+          <div className="flex items-start justify-between">
+            <div>
+              <a href={w.link} className="text-lg font-semibold underline-offset-4 hover:underline">
+            {w.title}
+              </a>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{w.date}</p>
+            </div>
+            <BookOpen className="h-5 w-5 text-zinc-400" />
           </div>
-        </Container>
-      </section>
+            </Card>
+          ))}
+        </div>
+          </Container>
+        </section>
+      )}
 
       <section id="contact" className="py-14 sm:py-20">
         <Container>
