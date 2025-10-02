@@ -2,8 +2,6 @@
 import React, { useEffect, useState, PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import {
-  Github,
-  Linkedin,
   Mail,
   Download,
   Moon,
@@ -16,7 +14,7 @@ import {
   BookOpen,
   MapPin,
 } from "lucide-react";
-import {siGithub} from "simple-icons/icons";
+import { GitHub, LinkedIn } from './component/icon';
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -298,22 +296,14 @@ export default function App() {
                     aria-label="GitHub"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
                   >
-                    <img src={siGithub.source} alt="GitHub" className="h-5 w-5" />
+                    <GitHub className="h-5 w-5" />
                   </a>
                   <a
                     href={profile.social.linkedin}
                     aria-label="LinkedIn"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
                   >
-                    <img
-                      src={
-                        document.documentElement.classList.contains("dark")
-                          ? "/in-logo/InBug-Black.png"
-                          : "/in-logo/InBug-Black.png"
-                      }
-                      alt="LinkedIn"
-                      className="h-5 w-5"
-                    />
+                    <LinkedIn className="h-5 w-5" />
                   </a>
                   {/* Email button that only shows if a mail client is available */}
                   {typeof window !== "undefined" && "navigator" in window && "canShare" in navigator ? null : (
@@ -532,10 +522,10 @@ export default function App() {
             <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
             <div className="flex items-center gap-3">
               <a href={profile.social.github} aria-label="GitHub" className="inline-flex h-9 w-9 items-center justify-center rounded-full border dark:border-zinc-800">
-                <Github className="h-4 w-4" />
+                <GitHub className="h-4 w-4" />
               </a>
               <a href={profile.social.linkedin} aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full border dark:border-zinc-800">
-                <Linkedin className="h-4 w-4" />
+                <LinkedIn className="h-4 w-4" />
               </a>
               <a href={`mailto:${profile.email}`} aria-label="Email" className="inline-flex h-9 w-9 items-center justify-center rounded-full border dark:border-zinc-800">
                 <Mail className="h-4 w-4" />
