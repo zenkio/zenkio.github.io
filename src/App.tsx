@@ -288,24 +288,6 @@ function AppContent() {
                   >
                     <LinkedIn className="h-5 w-5" />
                   </a>
-                  {/* Email button that only shows if a mail client is available */}
-                  {typeof window !== "undefined" && "navigator" in window && "canShare" in navigator ? null : (
-                    <a
-                      href={`mailto:${profile.email}`}
-                      aria-label="Email"
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
-                      style={{ display: window && "navigator" in window && "registerProtocolHandler" in navigator ? "inline-flex" : "none" }}
-                      onClick={e => {
-                        // Try to open mailto, fallback if not supported
-                        if (!window || !("navigator" in window) || !("registerProtocolHandler" in navigator)) {
-                          e.preventDefault();
-                          alert("No email client detected. Please copy the email address: " + profile.email);
-                        }
-                      }}
-                    >
-                      <Mail className="h-5 w-5" />
-                    </a>
-                  )}
                 </div>
               </div>
             </FadeIn>
@@ -509,9 +491,6 @@ function AppContent() {
               </a>
               <a href={profile.social.linkedin} aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full border dark:border-zinc-800">
                 <LinkedIn className="h-4 w-4" />
-              </a>
-              <a href={`mailto:${profile.email}`} aria-label="Email" className="inline-flex h-9 w-9 items-center justify-center rounded-full border dark:border-zinc-800">
-                <Mail className="h-4 w-4" />
               </a>
             </div>
           </div>
