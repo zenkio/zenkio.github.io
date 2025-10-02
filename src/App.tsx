@@ -155,10 +155,9 @@ const experience = [
     company: "Safeguard Global",
     period: "2021 — Present",
     bullets: [
-      "Developed a modern, responsive payroll application to streamline global payroll operations and enhance user experience.",
-      "Redesigned database schemas to optimize query performance and support scalable, generalized data models.",
-      "Engineered a robust data ingestion pipeline for validating, transforming, and summarizing incoming data prior to database integration.",
-      "Architected and implemented event-driven systems to facilitate seamless communication between backend services.",
+      "Built a scalable payroll platform, optimizing data models and system performance.",
+      "Designed event-driven pipelines for seamless backend integration.",
+      "Drove UX improvements and streamlined global payroll operations.",
     ],
   },
   {
@@ -166,9 +165,9 @@ const experience = [
     company: "Welab Bank",
     period: "2020 — 2021",
     bullets: [
-      "Collaborated with the frontend team to deliver new features for a digital banking application, improving customer engagement.",
-      "Led a small team to modernize legacy Java services, enhancing the reliability and maintainability of payment backend systems.",
-      "Resolved production issues and implemented improvements to increase overall system stability and uptime.",
+      "Delivered new digital banking features, boosting customer engagement.",
+      "Modernized Java services to enhance reliability and maintainability.",
+      "Resolved critical production issues, improving system uptime.",
     ],
   },
   {
@@ -176,8 +175,8 @@ const experience = [
     company: "Cityline (Hong Kong) Limited",
     period: "2018 — 2020",
     bullets: [
-      "Designed and implemented coupon logic for the Jockey Club project, increasing promotional flexibility.",
-      "Developed and maintained ticketing management features for the Ocean Park project, supporting high-volume transactions.",
+      "Engineered coupon and ticketing systems for high-traffic projects.",
+      "Enabled flexible promotions and supported large-scale transactions.",
     ],
   },
 ];
@@ -242,7 +241,7 @@ function useTypeEffect(texts: string[], typingSpeed = 60, pause = 1200) {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -284,7 +283,7 @@ const ThemeGradientBlob = () => {
   const gradient = getRandomGradient();
   return (
     <div
-      className={`absolute -right-8 -top-8 h-40 w-60 rounded-full bg-gradient-to-tr blur-2xl ${gradient}`}
+      className={`absolute -right-10 -top-20 h-60 w-60 rounded-full bg-gradient-to-tr blur-2xl ${gradient}`}
       aria-hidden
     />
   );
@@ -372,7 +371,7 @@ function AppContent() {
                 <ThemeGradientBlob />
                 <div className="relative">
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-zinc-600 dark:text-zinc-300">
-                    <Rocket className="h-3.5 w-3.5" /> Available for freelance
+                    <Rocket className="h-3.5 w-3.5" /> Growing with impact
                   </div>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {stats.map((s, i) => (
