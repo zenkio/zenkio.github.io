@@ -113,7 +113,8 @@ const profile = {
 };
 
 const stats = [
-  { label: "Years Experience", value: "6+" },
+  { label: "Years Experience on IT", value: "7+" },
+  { label: "Years Experience on Electonics", value: "8+" },
   { label: "Tech Stack", value: "React / Node / JAVA / AWS" },
 ];
 
