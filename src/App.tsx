@@ -229,10 +229,10 @@ function AppContent() {
               </div>
             </a>
             <nav className="hidden items-center gap-7 md:flex">
-              <a href="#projects" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Projects</a>
+              {projects.length > 0 && <a href="#projects" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Projects</a>}
               <a href="#skills" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Skills</a>
               <a href="#experience" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Experience</a>
-              <a href="#writing" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Writing</a>
+              {writing.length > 0 && <a href="#writing" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Writing</a>}  
               <a href="#contact" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Contact</a>
               <a href={profile.ctaCV} className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1.5 text-sm font-medium shadow-sm transition hover:scale-[1.02] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
                 <Download className="h-4 w-4" /> CV
