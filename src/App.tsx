@@ -2,6 +2,8 @@
 import React, { useEffect, useState, PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import {
+  Github,
+  Linkedin,
   Mail,
   Download,
   Moon,
