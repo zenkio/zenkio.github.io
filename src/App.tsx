@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -15,6 +15,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { GitHub, LinkedIn } from './component/icon';
+import { useTheme, ThemeProvider } from "./component/theme";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -66,25 +67,7 @@ const Card = ({
 );
 
 const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    const root = document.documentElement;
-    const stored = localStorage.getItem("theme");
-    const prefersDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const shouldDark = stored ? stored === "dark" : prefersDark;
-    root.classList.toggle("dark", shouldDark);
-    setIsDark(shouldDark);
-  }, []);
-
-  const toggle = () => {
-    const root = document.documentElement;
-    const next = !isDark;
-    root.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
-    setIsDark(next);
-  };
+  const { isDark, toggle } = useTheme();
 
   return (
     <button
@@ -232,7 +215,7 @@ const PlaceholderImage = () => (
   </div>
 );
 
-export default function App() {
+function AppContent() {
   return (
     <main className="min-h-screen scroll-smooth bg-zinc-50 text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-100">
       <header className="sticky top-0 z-50 border-b bg-white/70 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/60">
@@ -535,5 +518,13 @@ export default function App() {
         </Container>
       </footer>
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
