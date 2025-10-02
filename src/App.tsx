@@ -99,23 +99,22 @@ const ThemeToggle = () => {
 };
 
 const profile = {
-  name: "Man Ho (Zenkio) Fung",
+  name: "Zenkio Fung",
   title: "Software Engineer",
-  location: "London, UK",
+  location: "Manchester, UK",
   summary:
     "I build reliable, scalable web apps with a product mindset. Specialized in React, TypeScript, and cloud-native architectures.",
-  email: "zenkiofung@safeguardglobal.com",
+  email: "zenkio.it@gmail.com",
   social: {
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com/in/man-ho-fung-064850176/",
+    github: "https://github.com/zenkio",
+    linkedin: "https://www.linkedin.com/in/zenkio-fung-064850176",
   },
   ctaCV: "/Man_Ho_Fung_CV.pdf",
 };
 
 const stats = [
-  { label: "Years Experience", value: "8+" },
-  { label: "Projects Shipped", value: "45" },
-  { label: "Tech Stack", value: "React / TS / Node / AWS" },
+  { label: "Years Experience", value: "6+" },
+  { label: "Tech Stack", value: "React / Node / JAVA / AWS" },
 ];
 
 const skills = [
