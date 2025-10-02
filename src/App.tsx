@@ -16,6 +16,7 @@ import {
   BookOpen,
   MapPin,
 } from "lucide-react";
+import {siGithub} from "simple-icons/icons";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -297,7 +298,7 @@ export default function App() {
                     aria-label="GitHub"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-sm transition hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60"
                   >
-                    <Github className="h-5 w-5" />
+                    <img src={siGithub.svg} alt="GitHub" className="h-5 w-5" />
                   </a>
                   <a
                     href={profile.social.linkedin}
