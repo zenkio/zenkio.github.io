@@ -18,16 +18,16 @@ const LinkedIn = ({className = "h-5 w-5"}) => {
 };
 
 const GitHub = ({className = "h-5 w-5"}) => {
-    const isDark =
-        typeof document !== "undefined" &&
-        document.documentElement.classList.contains("dark");
-    const src = isDark
-        ? "/github-logo/github-mark.svg"
-        : "/github-logo/github-mark.svg";
+    // const isDark =
+    //     typeof document !== "undefined" &&
+    //     document.documentElement.classList.contains("dark");
+    // const src = isDark
+    //     ? "https://cdn.simpleicons.org/[ICON SLUG]"
+    //     : "/github-logo/github-mark.svg";
 
     return (
         <img
-            src={src}
+            src="https://cdn.simpleicons.org/github"
             alt="GitHub"
             className={className}
         />
