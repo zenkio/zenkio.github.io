@@ -2,7 +2,6 @@
 import React, { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import {
-  Mail,
   Download,
   Moon,
   Sun,
@@ -17,6 +16,7 @@ import {
 import { GitHub, LinkedIn } from './component/icon';
 import { useTheme, ThemeProvider } from "./component/theme";
 import { useEffect, useRef, useState } from "react";
+import Email from "./component/email";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -499,12 +499,7 @@ function AppContent() {
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                 Prefer email? I'm quick to respond during business hours.
               </p>
-              <a
-                href={`mailto:${profile.email}`}
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg dark:bg-white dark:text-zinc-900"
-              >
-                <Mail className="h-4 w-4" /> {profile.email}
-              </a>
+              <Email email={profile.email} />
             </Card>
             <Card>
               <h3 className="text-lg font-semibold">Quick message</h3>
