@@ -11,26 +11,17 @@ const Email = ({ email }: { email: string }) => {
     setClicked(true);
 
     try {
-      // 嘗試開預設 email app
       window.location.href = `mailto:${email}`;
 
-      // 等一陣睇下有冇反應
       const timeout = setTimeout(async () => {
         try {
           await navigator.clipboard.writeText(email);
           toast.success("Email copied");
-          console.debug("Email copied to clipboard after timeout");
         } catch (err) {
-          console.error("Clipboard failed", err);
-          alert("Failed to open email client or copy address");
+          alert(`Please copy the email address ${email} manually`);
         }
       }, 1000);
-
-      // 如果用戶真係開咗 email app，其實呢個 setTimeout 都唔會干擾
-      // 因為會跳走去 email client
     } catch (err) {
-      // fallback: 直接 copy
-      console.debug("Failed to open email client, copying instead", err);
       await navigator.clipboard.writeText(email);
       toast.success("Email copied");
     } finally {
