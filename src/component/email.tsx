@@ -18,7 +18,6 @@ const Email = ({ email }: { email: string }) => {
           await navigator.clipboard.writeText(email);
           toast.success("Email copied");
         } catch (err) {
-          alert(`Please copy the email address ${email} manually`);
         }
       }, 1000);
     } catch (err) {
