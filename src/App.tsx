@@ -17,6 +17,8 @@ import { GitHub, LinkedIn } from './component/icon';
 import { useTheme, ThemeProvider } from "./component/theme";
 import { useEffect, useRef, useState } from "react";
 import Email from "./component/email";
+import ContactForm from "./component/contactForm";
+import { Toaster } from "sonner";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -503,49 +505,7 @@ function AppContent() {
             </Card>
             <Card>
               <h3 className="text-lg font-semibold">Quick message</h3>
-              <form className="mt-3 grid grid-cols-1 gap-3" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid gap-1">
-                  <label htmlFor="name" className="text-xs text-zinc-600 dark:text-zinc-400">
-                    Name
-                  </label>
-                  <input
-                    id="name"
-                    className="rounded-xl border bg-white/70 px-3 py-2 text-sm outline-none ring-0 placeholder:text-zinc-400 focus:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div className="grid gap-1">
-                  <label htmlFor="email" className="text-xs text-zinc-600 dark:text-zinc-400">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    className="rounded-xl border bg-white/70 px-3 py-2 text-sm outline-none ring-0 placeholder:text-zinc-400 focus:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60"
-                    placeholder="you@domain.com"
-                  />
-                </div>
-                <div className="grid gap-1">
-                  <label htmlFor="message" className="text-xs text-zinc-600 dark:text-zinc-400">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    className="resize-none rounded-xl border bg-white/70 px-3 py-2 text-sm outline-none ring-0 placeholder:text-zinc-400 focus:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60"
-                    placeholder="Tell me a bit about your project…"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg dark:bg-white dark:text-zinc-900"
-                >
-                  Send <ArrowRight className="h-4 w-4" />
-                </button>
-                <p className="text-xs text-zinc-500">
-                  This demo form doesn't submit anywhere. Wire it to your backend or a form service.
-                </p>
-              </form>
+              <ContactForm />
             </Card>
           </div>
         </Container>
@@ -565,6 +525,7 @@ function AppContent() {
             </div>
           </div>
         </Container>
+        <Toaster position="bottom-center" richColors />
       </footer>
     </main>
   );

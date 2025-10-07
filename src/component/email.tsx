@@ -33,8 +33,8 @@ const Email = ({ email }: { email: string }) => {
   const showStyledToast = (message: string) => {
     toast.custom(
       () => (
-        <div className="flex items-center justify-center w-full md:max-w-[300px] rounded-full bg-zinc-700 text-white px-4 py-2 shadow-md dark:bg-zinc-800">
-          <p className="text-sm font-medium">{message}</p>
+        <div className="rounded-full bg-zinc-800 text-white px-4 py-2 text-sm shadow-md dark:bg-white dark:text-zinc-900">
+          {message}
         </div>
       ),
       { duration: 2500 }
@@ -52,7 +52,6 @@ const Email = ({ email }: { email: string }) => {
       >
         <Mail className="h-4 w-4" /> {email}
       </a>
-      <Toaster position="bottom-center" />
     </div>
   );
 };
