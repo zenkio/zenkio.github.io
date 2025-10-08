@@ -1,18 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 
-function useTypeEffect(
-  texts: string[],
+interface TypeWriterProps {
+  contents: string[];
+  typingSpeed?: number;
+  pause?: number;
+  deletingSpeedFactor?: number;
+}
+
+export const TypeWriter = ({
+  contents,
   typingSpeed = 70,
   pause = 1200,
-  isVisible = true
-) {
+  deletingSpeedFactor = 0.5,
+}: TypeWriterProps) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const rafRef = useRef<number>();
+  const lastTime = useRef<number>(0);
+  const isPaused = useRef(false);
+
+  const [isVisible, setIsVisible] = useState(false);
   const [display, setDisplay] = useState("");
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
-  const rafRef = useRef<number>();
-  const lastTime = useRef<number>(0);
-  const isPaused = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0].isIntersecting;
+        setIsVisible(visible);
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isVisible) {
@@ -20,12 +46,15 @@ function useTypeEffect(
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       return;
     }
+
     isPaused.current = false;
+    lastTime.current = performance.now();
 
     const animate = (time: number) => {
       if (isPaused.current) return;
-      const currentText = texts[index];
-      const speed = deleting ? typingSpeed / 2 : typingSpeed;
+
+      const currentText = contents[index];
+      const speed = deleting ? typingSpeed * deletingSpeedFactor : typingSpeed;
 
       const delta = time - lastTime.current;
       const steps = Math.floor(delta / speed);
@@ -37,6 +66,7 @@ function useTypeEffect(
           const nextIndex = Math.min(subIndex + steps, currentText.length);
           setSubIndex(nextIndex);
           setDisplay(currentText.slice(0, nextIndex));
+
           if (nextIndex === currentText.length) {
             setTimeout(() => setDeleting(true), pause);
           }
@@ -44,9 +74,10 @@ function useTypeEffect(
           const nextIndex = Math.max(subIndex - steps, 0);
           setSubIndex(nextIndex);
           setDisplay(currentText.slice(0, nextIndex));
+
           if (nextIndex === 0) {
             setDeleting(false);
-            setIndex((v) => (v + 1) % texts.length);
+            setIndex((v) => (v + 1) % contents.length);
           }
         }
       }
@@ -55,36 +86,19 @@ function useTypeEffect(
     };
 
     rafRef.current = requestAnimationFrame(animate);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [texts, index, subIndex, deleting, typingSpeed, pause, isVisible]);
-
-  return display;
-}
-
-
-export const TypeWriter = ({ contents }: { contents: string[] }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const text = useTypeEffect(contents);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => setIsVisible(entries[0].isIntersecting),
-      { threshold: 0.4 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  }, [contents, index, subIndex, deleting, typingSpeed, pause, deletingSpeedFactor, isVisible]);
 
   return (
-    <span ref={ref} className="whitespace-normal break-words text-balance">
-      {text}
+    <span
+      ref={ref}
+      className="inline-block max-w-full whitespace-normal break-words leading-snug"
+      style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
+    >
+      {display}
       <span className="animate-pulse text-primary">|</span>
     </span>
   );
