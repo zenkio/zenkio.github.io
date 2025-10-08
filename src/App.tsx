@@ -502,6 +502,7 @@ function AppContent() {
                 Prefer email? I'm quick to respond during business hours.
               </p>
               <Email email={profile.email} />
+              <Toaster richColors />
             </Card>
             <Card>
               <h3 className="text-lg font-semibold">Quick message</h3>
@@ -525,7 +526,6 @@ function AppContent() {
             </div>
           </div>
         </Container>
-        <Toaster position="bottom-center" richColors />
       </footer>
     </main>
   );

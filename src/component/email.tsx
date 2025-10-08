@@ -29,7 +29,6 @@ const Email = ({ email }: { email: string }) => {
     }
   };
 
-  /** Custom toast with simple grey style */
   const showStyledToast = (message: string) => {
     toast.custom(
       () => (
