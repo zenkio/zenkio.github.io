@@ -77,7 +77,7 @@ export const TypeWriter = ({ contents }: { contents: string[] }) => {
   }, []);
 
   return (
-    <span ref={ref} className="whitespace-pre text-balance">
+    <span ref={ref} className="whitespace-normal break-words text-balance">
       {text}
       <span className="animate-pulse text-primary">|</span>
     </span>
