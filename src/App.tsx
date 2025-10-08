@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import Email from "./component/email";
 import ContactForm from "./component/contactForm";
 import { Toaster } from "sonner";
+import { TypeWriter } from "./component/typeWritter";
 
 type ChildrenProps = PropsWithChildren<{}>;
 
@@ -232,54 +233,12 @@ function getRandomGradient() {
   return themeGradients[2]; // Or Math.floor(Math.random() * themeGradients.length)
 }
 
-const typeEffects = [
+const slogans = [
+  "Turn Coffee into Code, Ideas into Reality.",
   "Building performant, reliable interfaces.",
   "Specialized in React, TypeScript, and AWS.",
   "Delivering scalable web apps with a product mindset.",
 ];
-
-function useTypeEffect(texts: string[], typingSpeed = 60, pause = 1200) {
-  const [display, setDisplay] = useState("");
-  const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    if (!deleting && subIndex < texts[index].length) {
-      timeoutRef.current = setTimeout(() => {
-        setSubIndex((v) => v + 1);
-        setDisplay(texts[index].slice(0, subIndex + 1));
-      }, typingSpeed);
-    } else if (!deleting && subIndex === texts[index].length) {
-      timeoutRef.current = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && subIndex > 0) {
-      timeoutRef.current = setTimeout(() => {
-        setSubIndex((v) => v - 1);
-        setDisplay(texts[index].slice(0, subIndex - 1));
-      }, typingSpeed / 2);
-    } else if (deleting && subIndex === 0) {
-      setDeleting(false);
-      setIndex((v) => (v + 1) % texts.length);
-    }
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [texts, index, subIndex, deleting, typingSpeed, pause]);
-
-  return display;
-}
-
-const TypeEffect = () => {
-  const text = useTypeEffect(typeEffects);
-  return (
-    <span>
-      {text}
-      <span className="animate-pulse">|</span>
-    </span>
-  );
-};
 
 const ThemeGradientBlob = () => {
   const gradient = getRandomGradient();
@@ -332,7 +291,7 @@ function AppContent() {
                   <MapPin className="h-3.5 w-3.5" /> {profile.location}
                 </p>
                 <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                      <TypeEffect />
+                      <TypeWriter contents={slogans} />
                 </h1>
                 <p className="mt-5 max-w-xl text-lg text-zinc-600 dark:text-zinc-300">
                   {profile.summary}
