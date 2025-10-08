@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 
 function useTypeEffect(
   texts: string[],
-  typingSpeed = 70,
-  pause = 1500,
+  minSpeed = 50, // ms
+  maxSpeed = 100, // ms
+  pause = 1200,
   isVisible = true
 ) {
   const [display, setDisplay] = useState("");
@@ -26,9 +27,12 @@ function useTypeEffect(
     const animate = (time: number) => {
       if (isPaused.current) return;
 
-      const currentSpeed = deleting ? typingSpeed / 2.2 : typingSpeed;
+      // 固定速度範圍
+      const speed = deleting
+        ? Math.max(minSpeed, Math.min(maxSpeed, minSpeed)) / 2
+        : Math.max(minSpeed, Math.min(maxSpeed, minSpeed));
 
-      if (time - lastTime.current >= currentSpeed) {
+      if (time - lastTime.current >= speed) {
         lastTime.current = time;
         const current = texts[index];
 
@@ -53,7 +57,7 @@ function useTypeEffect(
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [texts, index, subIndex, deleting, typingSpeed, pause, isVisible]);
+  }, [texts, index, subIndex, deleting, minSpeed, maxSpeed, pause, isVisible]);
 
   return display;
 }
@@ -61,7 +65,7 @@ function useTypeEffect(
 export const TypeWriter = ({ contents }: { contents: string[] }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const text = useTypeEffect(contents, 70, 1500, isVisible);
+  const text = useTypeEffect(contents, 40, 100, 1200, isVisible);
 
   useEffect(() => {
     const el = ref.current;
