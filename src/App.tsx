@@ -94,7 +94,7 @@ const profile = {
     github: "https://github.com/zenkio",
     linkedin: "https://www.linkedin.com/in/zenkio-fung-064850176",
   },
-  ctaCV: "/Man_Ho_Fung_CV.pdf",
+  ctaCV: undefined, //"/Man_Ho_Fung_CV.pdf",
 };
 
 const stats = [
@@ -310,9 +310,9 @@ function AppContent() {
               <a href="#experience" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Experience</a>
               {writing.length > 0 && <a href="#writing" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Writing</a>}  
               <a href="#contact" className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">Contact</a>
-              <a href={profile.ctaCV} className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1.5 text-sm font-medium shadow-sm transition hover:scale-[1.02] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+              {profile.ctaCV? <a href={profile.ctaCV} className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1.5 text-sm font-medium shadow-sm transition hover:scale-[1.02] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
                 <Download className="h-4 w-4" /> CV
-              </a>
+              </a> : null}
               <ThemeToggle />
             </nav>
             <div className="md:hidden">
@@ -344,12 +344,12 @@ function AppContent() {
                   >
                     Let's talk <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
                   </a>
-                  <a
+                  {profile.ctaCV ? <a
                     href={profile.ctaCV}
                     className="inline-flex items-center gap-2 rounded-full border bg-white px-5 py-2.5 text-zinc-800 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
                   >
                     <Download className="h-4 w-4" /> Download CV
-                  </a>
+                  </a>: null}
                   <a
                     href={profile.social.github}
                     aria-label="GitHub"
