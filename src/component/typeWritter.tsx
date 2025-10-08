@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 function useTypeEffect(
   texts: string[],
-  minSpeed = 50, // ms
-  maxSpeed = 100, // ms
+  typingSpeed = 70,
   pause = 1200,
   isVisible = true
 ) {
@@ -21,32 +20,34 @@ function useTypeEffect(
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       return;
     }
-
     isPaused.current = false;
 
     const animate = (time: number) => {
       if (isPaused.current) return;
+      const currentText = texts[index];
+      const speed = deleting ? typingSpeed / 2 : typingSpeed;
 
-      // 固定速度範圍
-      const speed = deleting
-        ? Math.max(minSpeed, Math.min(maxSpeed, minSpeed)) / 2
-        : Math.max(minSpeed, Math.min(maxSpeed, minSpeed));
+      const delta = time - lastTime.current;
+      const steps = Math.floor(delta / speed);
 
-      if (time - lastTime.current >= speed) {
-        lastTime.current = time;
-        const current = texts[index];
+      if (steps > 0) {
+        lastTime.current = lastTime.current + steps * speed;
 
-        if (!deleting && subIndex < current.length) {
-          setSubIndex((v) => v + 1);
-          setDisplay(current.slice(0, subIndex + 1));
-        } else if (!deleting && subIndex === current.length) {
-          setTimeout(() => setDeleting(true), pause);
-        } else if (deleting && subIndex > 0) {
-          setSubIndex((v) => v - 1);
-          setDisplay(current.slice(0, subIndex - 1));
-        } else if (deleting && subIndex === 0) {
-          setDeleting(false);
-          setIndex((v) => (v + 1) % texts.length);
+        if (!deleting) {
+          const nextIndex = Math.min(subIndex + steps, currentText.length);
+          setSubIndex(nextIndex);
+          setDisplay(currentText.slice(0, nextIndex));
+          if (nextIndex === currentText.length) {
+            setTimeout(() => setDeleting(true), pause);
+          }
+        } else {
+          const nextIndex = Math.max(subIndex - steps, 0);
+          setSubIndex(nextIndex);
+          setDisplay(currentText.slice(0, nextIndex));
+          if (nextIndex === 0) {
+            setDeleting(false);
+            setIndex((v) => (v + 1) % texts.length);
+          }
         }
       }
 
@@ -57,15 +58,16 @@ function useTypeEffect(
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [texts, index, subIndex, deleting, minSpeed, maxSpeed, pause, isVisible]);
+  }, [texts, index, subIndex, deleting, typingSpeed, pause, isVisible]);
 
   return display;
 }
 
+
 export const TypeWriter = ({ contents }: { contents: string[] }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const text = useTypeEffect(contents, 40, 100, 1200, isVisible);
+  const text = useTypeEffect(contents);
 
   useEffect(() => {
     const el = ref.current;
