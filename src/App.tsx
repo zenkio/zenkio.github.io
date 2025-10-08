@@ -85,7 +85,7 @@ const ThemeToggle = () => {
 
 const profile = {
   name: "Zenkio Fung",
-  title: "Software Engineer",
+  title: "Senior Software Engineer",
   location: "Manchester, UK",
   summary:
     "I build reliable, scalable web apps with a product mindset. Specialized in React, TypeScript, and cloud-native architectures.",
