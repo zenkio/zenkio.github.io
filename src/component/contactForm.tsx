@@ -15,6 +15,11 @@ export default function ContactForm() {
     const formData = new FormData(form);
     formData.append('access_key', '89bdb317-0997-4c33-9cc9-c38c28ab783b');
     try {
+      const name = formData.get('name');
+      const message = formData.get('message');
+      const subject = `${message?.slice(0, 50)}...`;
+      formData.set('subject', subject);
+      formData.set('from_name', name as string);
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData,
