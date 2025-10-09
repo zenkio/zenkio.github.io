@@ -5,7 +5,6 @@ import {
   Download,
   Moon,
   Sun,
-  ExternalLink,
   ArrowRight,
   Code2,
   Briefcase,
@@ -15,60 +14,19 @@ import {
 } from "lucide-react";
 import { GitHub, LinkedIn } from './component/icon';
 import { useTheme, ThemeProvider } from "./component/theme";
-import { useEffect, useRef, useState } from "react";
 import Email from "./component/email";
 import ContactForm from "./component/contactForm";
 import { Toaster } from "sonner";
 import { TypeWriter } from "./component/typeWritter";
+import { Container } from "./component/container";
+import { SectionTitle } from "./component/sectionTitle";
+import type { ChildrenProps, Project } from "./component/types";
+import { Badge } from "./component/badge";
+import { Card } from "./component/card";
+import { FadeIn } from "./component/fadeIn";
+import ProjectList from "./component/project";
 
-type ChildrenProps = PropsWithChildren<{}>;
 
-const Container = ({ children }: ChildrenProps) => (
-  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
-);
-
-const SectionTitle = ({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-}) => (
-  <div className="mb-10 text-center">
-    {eyebrow && (
-      <p className="mb-2 inline-block rounded-full border px-3 py-1 text-xs font-medium tracking-wide text-zinc-600 dark:text-zinc-300">
-        {eyebrow}
-      </p>
-    )}
-    <h2 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-      {title}
-    </h2>
-    {subtitle && (
-      <p className="mx-auto mt-3 max-w-2xl text-zinc-600 dark:text-zinc-300">
-        {subtitle}
-      </p>
-    )}
-  </div>
-);
-
-const Badge = ({ children }: ChildrenProps) => (
-  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs text-zinc-700 dark:text-zinc-200">
-    {children}
-  </span>
-);
-
-const Card = ({
-  children,
-  className = "",
-}: { children: React.ReactNode; className?: string }) => (
-  <div
-    className={`rounded-2xl border bg-white/70 p-5 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60 ${className}`}
-  >
-    {children}
-  </div>
-);
 
 const ThemeToggle = () => {
   const { isDark, toggle } = useTheme();
@@ -119,23 +77,14 @@ const skills = [
   "Tailwind CSS",
 ];
 
-
-
-type Project = {
-  title: string;
-  description: string;
-  stack: string[];
-  link: string;
-};
-
 const projects: Project[] = [
-  // {
-  //   title: "Realtime Analytics Dashboard",
-  //   description:
-  //     "High-throughput data viz platform ingesting millions of events/day with sub-second charts.",
-  //   stack: ["Next.js", "WebSockets", "ClickHouse"],
-  //   link: "#",
-  // },
+  {
+    title: "Realtime Analytics Dashboard",
+    description:
+      "High-throughput data viz platform ingesting millions of events/day with sub-second charts.",
+    stack: ["Next.js", "WebSockets", "ClickHouse"],
+    link: "#",
+  },
   // {
   //   title: "Headless Commerce Kit",
   //   description:
@@ -196,15 +145,7 @@ const writing: Writing[] = [
   // { title: "Testing Beyond the UI: Contract Tests", date: "Mar 2025", link: "#" },
 ];
 
-const FadeIn = ({ delay = 0, children, y = 12 }: { delay?: number; children: React.ReactNode; y?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay }}
-  >
-    {children}
-  </motion.div>
-);
+
 
 const GradientBlob = ({ className = "" }: { className?: string }) => (
   <div aria-hidden className={`pointer-events-none absolute inset-0 -z-10 overflow-hidden ${className}`}>
@@ -212,11 +153,7 @@ const GradientBlob = ({ className = "" }: { className?: string }) => (
   </div>
 );
 
-const PlaceholderImage = () => (
-  <div className="flex h-40 w-full items-center justify-center rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 text-zinc-400 dark:from-zinc-800 dark:to-zinc-700">
-    <Code2 className="h-6 w-6" />
-  </div>
-);
+
 
 // Theme gradient options and component moved to top-level scope
 const themeGradients = [
@@ -350,35 +287,7 @@ function AppContent() {
       </section>
       {projects.length > 0 && (
         <section id="projects" className="py-14 sm:py-20">
-          <Container>
-            <SectionTitle eyebrow="Selected Work" title="Projects" subtitle="A few things I've shipped recently." />
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((p, idx) => (
-                <FadeIn key={idx} delay={idx * 0.05}>
-                  <Card className="flex h-full flex-col">
-                    <PlaceholderImage />
-                    <div className="mt-4 flex flex-1 flex-col">
-                      <h3 className="text-lg font-semibold">{p.title}</h3>
-                      <p className="mt-1 flex-1 text-sm text-zinc-600 dark:text-zinc-300">{p.description}</p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {p.stack.map((s, i) => (
-                          <Badge key={i}>{s}</Badge>
-                        ))}
-                      </div>
-                      <div className="mt-4">
-                        <a
-                          href={p.link}
-                          className="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
-                        >
-                          View project <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </div>
-                    </div>
-                  </Card>
-                </FadeIn>
-              ))}
-            </div>
-          </Container>
+          <ProjectList projects={projects} />
         </section>
       )}
 
