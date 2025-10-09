@@ -21,7 +21,7 @@ export const TypeWriter = ({
   const [isVisible, setIsVisible] = useState(false);
 
   const ref = useRef<HTMLSpanElement>(null);
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 
   // IntersectionObserver 判斷可見性

@@ -287,7 +287,7 @@ function AppContent() {
       </section>
       {projects.length > 0 && (
         <section id="projects" className="py-14 sm:py-20">
-          <ProjectList projects={projects} />
+          <ProjectList />
         </section>
       )}
 
