@@ -1,9 +1,9 @@
 name: Prevent Supabase Inactivity
 
 on:
+  workflow_dispatch:  # Allows manual triggering
   schedule:
     - cron: '0 0 * * 0'  # Runs at midnight every Sunday
-  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   ping-database:
