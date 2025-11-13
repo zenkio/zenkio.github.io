@@ -16,6 +16,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          curl -X GET "${SUPABASE_URL}/rest/v1/" \
-          -H "apikey: ${SUPABASE_KEY}" \
-          -H "Authorization: Bearer ${SUPABASE_KEY}"
+            curl -sS "${SUPABASE_URL}/rest/v1/projects?select=*&order=created_at.desc" \
+            -H "apikey: ${SUPABASE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_KEY}" \
+            -H "Accept: application/json"
