@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Shadow Test (No Google Key)</title>
+    
+    <!-- Mapbox GL JS V3 -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css" rel="stylesheet">
+    
+    <!-- Geocoder -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+    <!-- SunCalc -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; font-family: sans-serif; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        
+        #controls {
+            position: absolute; top: 20px; left: 20px; width: 300px;
+            background: rgba(255, 255, 255, 0.95); padding: 20px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        h2 { margin: 0 0 15px 0; font-size: 18px; color: #333; }
+        
+        .row { margin-bottom: 15px; }
+        label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; color: #555; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        
+        .mapboxgl-ctrl-geocoder { min-width: 100%; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div id="controls">
+    <h2>🇬🇧 UK Sunlight Test</h2>
+    <div id="geocoder-box"></div>
+
+    <div class="row">
+        <label>📅 Month <span id="date-val">Jun</span></label>
+        <input type="range" id="month" min="0" max="11" value="5">
+    </div>
+
+    <div class="row">
+        <label>⏰ Time <span id="time-val">12:00</span></label>
+        <input type="range" id="time" min="0" max="23.9" step="0.1" value="12">
+    </div>
+    
+    <div style="font-size:11px; color:#666;">
+        Using Mapbox Standard V3.<br>
+        Shadows are calculated automatically.
+    </div>
+</div>
+
+<div id="map"></div>
+
+<script>
+    // ==========================================
+    // 1. PASTE YOUR MAPBOX TOKEN HERE
+    // ==========================================
+    // You said you have one earlier. It is free to create at mapbox.com
+    mapboxgl.accessToken = process.env.VITE_MAPBOX_TOKEN; 
+
+    // ==========================================
+    // 2. SETUP MAP (Standard Style)
+    // ==========================================
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/standard', // The magic V3 style
+        center: [-0.1276, 51.5072], // London
+        zoom: 17,
+        pitch: 60,
+        bearing: -20
+    });
+
+    const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        countries: 'gb',
+        placeholder: 'Search Address...',
+        marker: false
+    });
+    document.getElementById('geocoder-box').appendChild(geocoder.onAdd(map));
+
+    // ==========================================
+    // 3. SUN PHYSICS LOGIC
+    // ==========================================
+    const monthInput = document.getElementById('month');
+    const timeInput = document.getElementById('time');
+
+    map.on('style.load', () => {
+        // Force the map to accept our manual sun position
+        // By default, Mapbox Standard changes sun based on zoom.
+        // We override this to base it on TIME.
+        map.setConfig('basemap', {
+            'lightPreset': 'day', 
+            'showPointOfInterestLabels': false
+        });
+        updateSun();
+    });
+
+    function updateSun() {
+        const center = map.getCenter();
+        const m = parseInt(monthInput.value);
+        const t = parseFloat(timeInput.value);
+        
+        // UI
+        const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        document.getElementById('date-val').innerText = months[m];
+        
+        const h = Math.floor(t);
+        const min = Math.floor((t%1)*60);
+        document.getElementById('time-val').innerText = `${h.toString().padStart(2,'0')}:${min.toString().padStart(2,'0')}`;
+
+        // Math
+        const date = new Date();
+        date.setMonth(m);
+        date.setHours(h);
+        date.setMinutes(min);
+        
+        const sunPos = SunCalc.getPosition(date, center.lat, center.lng);
+        
+        // Convert to Mapbox format
+        const altitude = sunPos.altitude * (180 / Math.PI);
+        const azimuth = (sunPos.azimuth * (180 / Math.PI)) + 180;
+        const polar = 90 - altitude;
+
+        // Apply Light
+        // This overrides the default map sun
+        let intensity = 1.0;
+        let color = '#ffffff';
+
+        if(altitude < 0) { intensity = 0.1; color = '#222244'; } // Night
+        else if (altitude < 10) { intensity = 0.8; color = '#ffaa00'; } // Sunrise
+
+        if (map.isStyleLoaded()) {
+            map.setLights([
+                {
+                    "id": "sun",
+                    "type": "directional",
+                    "properties": {
+                        "cast-shadows": true,
+                        "shadow-intensity": 1.0,
+                        "intensity": intensity,
+                        "direction": [azimuth, polar], 
+                        "color": color
+                    }
+                },
+                {
+                    "id": "ambient",
+                    "type": "ambient",
+                    "properties": {
+                        "intensity": altitude < 0 ? 0.1 : 0.4,
+                        "color": color
+                    }
+                }
+            ]);
+        }
+    }
+
+    monthInput.addEventListener('input', updateSun);
+    timeInput.addEventListener('input', updateSun);
+    map.on('moveend', updateSun);
+
+</script>
+</body>
+</html>
